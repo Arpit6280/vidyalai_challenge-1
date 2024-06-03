@@ -47,6 +47,7 @@ const Content = styled.div(() => ({
 const Button = styled.button(() => ({
   position: 'absolute',
   bottom: 0,
+  top: '42%',
   backgroundColor: 'rgba(255, 255, 255, 0.5)',
   border: 'none',
   color: '#000',
@@ -63,13 +64,42 @@ const NextButton = styled(Button)`
   right: 10px;
 `;
 
+const UserDetail = styled.section(() => ({
+  display: 'flex',
+  margin: '10px',
+}));
+
+const UserLogo = styled.div(() => ({
+  width: '50px',
+  height: '50px',
+  backgroundColor: 'gray',
+  fontWeight: 'bold',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  color: 'white',
+  borderRadius: '50%',
+  fontSize: '1.2rem',
+}));
+
+const UserData = styled.div(() => ({
+  margin: '0px 10px',
+  h4: {
+    marginTop: '3px',
+  },
+  p: {
+    fontSize: '13px',
+    lineHeight: 1,
+  },
+}));
+
 const Post = ({ post }) => {
   const carouselRef = useRef(null);
 
   const handleNextClick = () => {
     if (carouselRef.current) {
       carouselRef.current.scrollBy({
-        left: 50,
+        left: 300,
         behavior: 'smooth',
       });
     }
@@ -78,14 +108,29 @@ const Post = ({ post }) => {
   const handlePrevClick = () => {
     if (carouselRef.current) {
       carouselRef.current.scrollBy({
-        left: -70,
+        left: -300,
         behavior: 'smooth',
       });
     }
   };
 
+  function getInitials(fullName) {
+    const nameArray = fullName.split(' ');
+    const firstNameInitial = nameArray[0].charAt(0).toUpperCase();
+    const lastNameInitial = nameArray[nameArray.length - 1]
+      .charAt(0)
+      .toUpperCase();
+    return firstNameInitial + lastNameInitial;
+  }
+
   return (
     <PostContainer>
+      <UserDetail>
+        <UserLogo> {getInitials(post.user.name)}</UserLogo>
+        <UserData>
+          <h4>{post.user.name} </h4> <p>{post.user.email}</p>
+        </UserData>
+      </UserDetail>
       <CarouselContainer>
         <Carousel ref={carouselRef}>
           {post.images.map((image, index) => (
@@ -112,6 +157,8 @@ Post.propTypes = {
       map: PropTypes.func,
     }),
     title: PropTypes.any,
+    body: PropTypes.any,
+    user: PropTypes.any,
   }),
 };
 

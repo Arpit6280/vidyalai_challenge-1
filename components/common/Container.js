@@ -1,5 +1,6 @@
 import React from 'react';
-import useWindowWidth from '../hooks/useWindowWidth';
+import { useWindowWidth } from '../hooks/useWindowWidth';
+import PropTypes from 'prop-types';
 
 export default function Container({ children }) {
   const { isSmallerDevice } = useWindowWidth();
@@ -16,3 +17,7 @@ export default function Container({ children }) {
     </div>
   );
 }
+
+Container.propTypes = {
+  children: PropTypes.any,
+};

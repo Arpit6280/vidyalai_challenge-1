@@ -9,9 +9,9 @@ const axios = require('axios').default;
  * @returns {Promise<Array>} - A promise that resolves to an array of posts.
  */
 async function fetchPosts(params) {
-  const { start = 0, limit = 10 } = params || {};
-  const { data: posts } = await axios.get(
-    'https://jsonplaceholder.typicode.com/posts?limit',
+  const { start, limit } = params;
+  const { data: posts, headers } = await axios.get(
+    `https://jsonplaceholder.typicode.com/posts?`,
     {
       params: {
         _start: start,
@@ -20,7 +20,8 @@ async function fetchPosts(params) {
     },
   );
 
-  return posts;
+  let totalcount = headers.get('X-Total-Count');
+  return { posts, totalcount };
 }
 
 module.exports = { fetchPosts };

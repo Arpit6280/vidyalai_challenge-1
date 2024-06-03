@@ -1,9 +1,16 @@
 import React from 'react';
+import { WindowWidthProvider } from '../components/hooks/useWindowWidth';
+import PropTypes from 'prop-types';
 
 const App = ({ Component, pageProps }) => (
-  <React.Fragment>
+  <WindowWidthProvider>
     <Component {...pageProps} />
-  </React.Fragment>
+  </WindowWidthProvider>
 );
+
+App.propTypes = {
+  Component: PropTypes.any,
+  pageProps: PropTypes.any,
+};
 
 export default App;
